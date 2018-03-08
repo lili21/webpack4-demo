@@ -1,3 +1,3 @@
 import _ from 'lodash'
 console.log('hahahh')
-console.log('hello async bar ioioi')
+console.log('hello async baroi')

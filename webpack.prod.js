@@ -1,4 +1,9 @@
-module.exports = {
+const MiniCssWebpackPlugin = require('mini-css-extract-plugin')
+const merge = require('webpack-merge')
+
+const base = require('./webpack.base')
+
+module.exports = merge(base, {
   mode: 'production',
   output: {
     filename: '[name].[chunkhash].js',
@@ -10,20 +15,27 @@ module.exports = {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           chunks: 'initial',
-          priority: -10,
           name: 'vendors',
         },
         'async-vendors': {
           test: /[\\/]node_modules[\\/]/,
           minChunks: 2,
           chunks: 'async',
-          priority: 0,
           name: 'async-vendors'
         }
       }
     },
-    runtimeChunk: true,
+    runtimeChunk: {
+      name: 'runtime'
+    },
     namedModules: true,
     namedChunks: true
-  }
-}
+  },
+  plugins: [
+    // 暂时不支持contenthash
+    new MiniCssWebpackPlugin({
+      filename: '[name].[chunkhash:6].css',
+      chunkFilename: '[name].[chunkhash:6].css'
+    })
+  ]
+})
