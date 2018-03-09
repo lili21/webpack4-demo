@@ -1,6 +1,7 @@
 import preact from 'preact'
 // import _ from 'lodash'
 import './bar'
+// import './app.css'
 import(/* webpackChunkName: "async-bar" */'./async-bar').then(a => console.log(a))
 import(/* webpackChunkName: "async-foo" */'./async-foo').then(a => console.log(a))
 // console.log(preact.toString())

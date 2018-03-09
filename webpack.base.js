@@ -1,6 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   module: {
@@ -21,7 +19,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
-    }),
-    new ExtractTextPlugin('[name].[contenthash:6].css')
+    })
   ]
 }

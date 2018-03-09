@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const MiniCssWebpackPlugin = require('mini-css-extract-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const merge = require('webpack-merge')
 
 const base = require('./webpack.base')
@@ -26,21 +26,11 @@ module.exports = merge(base, {
         }
       }
     },
-    runtimeChunk: {
-      name: 'runtime'
-    },
-    // namedModules: true,
-    // namedChunks: true
+    runtimeChunk: { name: 'runtime' }
   },
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
-    new webpack.NamedChunksPlugin(chunk => {
-      return chunk.name || 'faceless-chunk' // a chunk has no name!!!
-    }),
-    // 暂时不支持contenthash
-    // new MiniCssWebpackPlugin({
-    //   filename: '[name].[chunkhash:6].css',
-    //   chunkFilename: '[name].[chunkhash:6].css'
-    // })
+    new webpack.NamedChunksPlugin(chunk => chunk.name || 'faceless-chunk'), // a chunk has no name!!!
+    new ExtractTextPlugin('[name].[contenthash:6].css')
   ]
 })
