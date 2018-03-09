@@ -38,9 +38,9 @@ module.exports = merge(base, {
       return chunk.name || 'faceless-chunk' // a chunk has no name!!!
     }),
     // 暂时不支持contenthash
-    new MiniCssWebpackPlugin({
-      filename: '[name].[chunkhash:6].css',
-      chunkFilename: '[name].[chunkhash:6].css'
-    })
+    // new MiniCssWebpackPlugin({
+    //   filename: '[name].[chunkhash:6].css',
+    //   chunkFilename: '[name].[chunkhash:6].css'
+    // })
   ]
 })
