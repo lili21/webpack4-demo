@@ -21,6 +21,4 @@ npm build
 Knowing Issue
 -------------
 
-- `mini-css-webpack-plugin` does support HMR
-- `mini-css-webpack-plugin` does support content hash. [issue](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/1)
 - `extract-text-webpack-plugin` emit empty css files [issue](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/738)
