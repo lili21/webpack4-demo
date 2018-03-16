@@ -14,7 +14,11 @@ module.exports = merge(base, {
     splitChunks: {
       cacheGroups: {
         vendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: chunk => (
+            chunk.resource &&
+            /\.js$/.test(chunk.resource) &&
+            /node_modules/.test(chunk.resource)
+          ),
           chunks: 'initial',
           name: 'vendors',
         },
