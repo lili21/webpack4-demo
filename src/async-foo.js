@@ -1,2 +1,1 @@
-import _ from 'lodash'
-console.log('foo')
+console.log('hello async-foo')

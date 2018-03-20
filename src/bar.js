@@ -1,1 +1,1 @@
-console.log('hello a.js')
+console.log('hello bar.js')
