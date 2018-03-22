@@ -21,4 +21,6 @@ npm build
 Knowing Issue
 -------------
 
-- `extract-text-webpack-plugin` emit empty css files [issue](https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/738)
+- [content hash](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/1)
+- [HMR](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/34)
+
