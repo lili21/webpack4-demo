@@ -1,6 +1,6 @@
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const merge = require('webpack-merge')
+const MiniCssPlugin = require('mini-css-extract-plugin')
 
 const base = require('./webpack.base')
 
@@ -9,6 +9,17 @@ module.exports = merge(base, {
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssPlugin.loader,
+          'css-loader'
+        ]
+      }
+    ]
   },
   optimization: {
     splitChunks: {
@@ -35,6 +46,9 @@ module.exports = merge(base, {
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new webpack.NamedChunksPlugin(chunk => chunk.name || 'faceless-chunk'), // a chunk has no name!!!
-    new ExtractTextPlugin('[name].[contenthash:6].css')
+    new MiniCssPlugin({
+      filename: '[name].[chunkhash:6].css',
+      chunkFilename: '[name].[chunkhash:6].css'
+    })
   ]
 })
