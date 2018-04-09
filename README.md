@@ -18,6 +18,11 @@ npm start
 npm build
 ```
 
+TODO LIST
+---------
+
+- webpack@4.3.0 加了 `contenthash` 的支持，看一下对long term cache有没有影响
+
 Knowing Issue
 -------------
 
