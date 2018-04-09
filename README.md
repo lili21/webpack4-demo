@@ -21,6 +21,5 @@ npm build
 Knowing Issue
 -------------
 
-- [content hash](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/1)
 - [HMR](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/34)
 
