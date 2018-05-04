@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssPlugin = require('mini-css-extract-plugin')
@@ -7,13 +8,14 @@ const base = require('./webpack.base')
 module.exports = merge(base, {
   mode: 'production',
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].js'
+    filename: '[name]-[contenthash].js',
+    chunkFilename: '[name]-[contenthash].chunk.js'
   },
   module: {
     rules: [
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           MiniCssPlugin.loader,
           'css-loader'
@@ -47,8 +49,8 @@ module.exports = merge(base, {
     new webpack.HashedModuleIdsPlugin(),
     new webpack.NamedChunksPlugin(chunk => chunk.name || 'faceless-chunk'), // a chunk has no name!!!
     new MiniCssPlugin({
-      filename: '[name].[contenthash:6].css',
-      chunkFilename: '[name].[contenthash:6].css'
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[name].[contenthash].css'
     })
   ]
 })

@@ -9,6 +9,7 @@ module.exports = merge(base, {
       {
         test: /\.css$/,
         // mini-css-extract-plugin 暂时不支持hmr
+        exclude: /node_modules/,
         use: [ 'style-loader', 'css-loader' ]
       }
     ]
