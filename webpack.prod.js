@@ -26,6 +26,16 @@ module.exports = merge(base, {
   optimization: {
     splitChunks: {
       cacheGroups: {
+        // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
+        styles: {
+          name: 'styles',
+          // test: /\.(css|s[ac]ss)$/,
+          test: module => module.nameForCondition &&
+            /\.(css|s[ac]ss)$/.test(module.nameForCondition()) &&
+            !/^javascript/.test(module.type),
+          chunks: 'all',
+          enforce: true,
+        },
         vendors: {
           test: chunk => (
             chunk.resource &&
@@ -35,19 +45,25 @@ module.exports = merge(base, {
           chunks: 'initial',
           name: 'vendors',
         },
-        'async-vendors': {
-          test: /[\\/]node_modules[\\/]/,
-          minChunks: 2,
-          chunks: 'async',
-          name: 'async-vendors'
-        }
       }
     },
     runtimeChunk: { name: 'runtime' }
   },
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
-    new webpack.NamedChunksPlugin(chunk => chunk.name || 'faceless-chunk'), // a chunk has no name!!!
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+
+      // eslint-disable-next-line no-underscore-dangle
+      return [...chunk._modules]
+        .map(m => path.relative(
+          m.context,
+          m.userRequest.substring(0, m.userRequest.lastIndexOf('.')),
+        ))
+        .join('_');
+    }),
     new MiniCssPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[name].[contenthash].css'
