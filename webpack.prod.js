@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const MiniCssPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 
 const base = require('./webpack.base')
 
@@ -25,11 +27,13 @@ module.exports = merge(base, {
   },
   optimization: {
     splitChunks: {
+      // 如果支持http2的话，可以把下面两个注释去掉
+      // maxAsyncRequests: Infinity,
+      // maxInitialRequests: Infinity,
       cacheGroups: {
         // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
         styles: {
           name: 'styles',
-          // test: /\.(css|s[ac]ss)$/,
           test: module => module.nameForCondition &&
             /\.(css|s[ac]ss)$/.test(module.nameForCondition()) &&
             !/^javascript/.test(module.type),
@@ -51,6 +55,7 @@ module.exports = merge(base, {
   },
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
+
     new webpack.NamedChunksPlugin(chunk => {
       if (chunk.name) {
         return chunk.name;
@@ -64,9 +69,28 @@ module.exports = merge(base, {
         ))
         .join('_');
     }),
+
     new MiniCssPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[name].[contenthash].css'
+    }),
+
+    new OptimizeCSSPlugin({}),
+
+    new ScriptExtHtmlWebpackPlugin({
+      inline: [
+        // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
+        /styles.*\.js$/, // temporary fix style.js issue
+        /runtime/
+      ],
+      prefetch: {
+        test: /\.js$/,
+        chunks: 'async',
+      },
+      preload: {
+        test: /\.js$/,
+        chunks: 'initial'
+      }
     })
   ]
 })
