@@ -11,7 +11,8 @@ module.exports = merge(base, {
   mode: 'production',
   output: {
     filename: '[name]-[contenthash].js',
-    chunkFilename: '[name]-[contenthash].chunk.js'
+    chunkFilename: '[name]-[contenthash].chunk.js',
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -27,19 +28,9 @@ module.exports = merge(base, {
   },
   optimization: {
     splitChunks: {
-      // 如果支持http2的话，可以把下面两个注释去掉
-      // maxAsyncRequests: Infinity,
-      // maxInitialRequests: Infinity,
+      maxAsyncRequests: Infinity,
+      maxInitialRequests: Infinity,
       cacheGroups: {
-        // https://github.com/webpack-contrib/mini-css-extract-plugin/issues/85
-        styles: {
-          name: 'styles',
-          test: module => module.nameForCondition &&
-            /\.(css|s[ac]ss)$/.test(module.nameForCondition()) &&
-            !/^javascript/.test(module.type),
-          chunks: 'all',
-          enforce: true,
-        },
         vendors: {
           test: chunk => (
             chunk.resource &&

@@ -3,6 +3,7 @@ const merge = require('webpack-merge')
 const base = require('./webpack.base')
 
 module.exports = merge(base, {
+  stats: 'errors-warnings',
   mode: 'development',
   module: {
     rules: [
@@ -13,5 +14,10 @@ module.exports = merge(base, {
         use: [ 'style-loader', 'css-loader' ]
       }
     ]
+  },
+  devServer: {
+    port: 8080,
+    historyApiFallback: true,
+    hot: true
   }
 })

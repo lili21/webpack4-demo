@@ -1,4 +1,4 @@
-webpack-4-demo
+webpack4-demo
 ==============
 > migrate guide
 
@@ -12,14 +12,8 @@ Get Start
 yarn
 
 # serve with hot reload at localhost:8080
-npm start
+yarn dev
 
 # build for production with minification
-npm build
+yarn build
 ```
-
-Knowing Issue
--------------
-
-- [HMR](https://github.com/webpack-contrib/mini-css-extract-plugin/issues/34)
-
